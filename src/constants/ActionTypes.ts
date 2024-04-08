@@ -1,0 +1,2 @@
+export const ADD_RECIPE_LIST = "ADD_RECIPE_LIST";
+export const ADD_RECIPE_DETAIL = "ADD_RECIPE_DETAIL";
