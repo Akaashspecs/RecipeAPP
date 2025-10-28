@@ -18,6 +18,7 @@ type RecipeListType = {
 const RecipeList: FC = () => {
   const [query, setQuery] = useState<string>("");
   const [offset, setoffSet] = useState<number>(0);
+  const [search, setSearch] = useState<string>("");
   const dispatch = useDispatch();
   const recipeListData: RecipeListType[] = useSelector(recipeSelectorData);
   const [selectedOption, setSelectedOption] = useState<
@@ -51,15 +52,30 @@ const RecipeList: FC = () => {
     setQuery(event);
   };
 
+  const searchChange = (event: string) => {
+    console.log(event);
+    setSearch(event);
+  };
+
   return (
-    <div className="w-4/5  h-screen">
-      <div className="flex flex-col sm:flex-row justify-around pt-5">
+    <div className="w-screen  h-screen flex flex-col items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-center py-2 w-screen bg-gradient-to-r from-orange-500 to-orange-400 px-10">
+        <div className="flex">
+          <img
+            src="/app-logo.png"
+            alt="app-logo"
+            className="h-[70px] w-[70px]"
+          />
+          <div className="lavishly-yours-regular text-[45px] text-white">
+            Recipe App
+          </div>
+        </div>
+
         <SearchBar
           placeholder="Search Bar"
-          value={query}
-          onChange={(event) => {
-            showsQueryChange(event.target.value);
-          }}
+          value={search}
+          showsQueryChange={(value) => showsQueryChange(value)}
+          searchChange={(value) => searchChange(value)}
         />
         <Select
           placeholder="Cuisine Category"
@@ -70,20 +86,22 @@ const RecipeList: FC = () => {
           options={options}
         />
       </div>
-      <RecipeCard recipeCard={recipeListData} />
-      <ReactPaginate
-        className="flex justify-center bg-slate-200 gap-1 rounded-xl mt-5 "
-        breakLabel="..."
-        nextLabel="next >"
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={3}
-        pageCount={pageCount}
-        previousLabel="< previous"
-        renderOnZeroPageCount={null}
-        previousLinkClassName=""
-        activeLinkClassName="text-sky-500"
-        pageLinkClassName="hover:text-sky-500"
-      />
+      <div className="w-4/5">
+        <RecipeCard recipeCard={recipeListData} />
+        <ReactPaginate
+          className="flex justify-center bg-slate-200 gap-1 rounded-xl mt-5 "
+          breakLabel="..."
+          nextLabel="next >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={3}
+          pageCount={pageCount}
+          previousLabel="< previous"
+          renderOnZeroPageCount={null}
+          previousLinkClassName=""
+          activeLinkClassName="text-sky-500"
+          pageLinkClassName="hover:text-sky-500"
+        />
+      </div>
     </div>
   );
 };
